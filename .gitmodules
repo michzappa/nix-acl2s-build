@@ -1,0 +1,3 @@
+[submodule "CS4820"]
+	path = CS4820
+	url = git@github.com:jakeisnt/CS4820-1.git

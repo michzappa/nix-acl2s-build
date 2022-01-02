@@ -1,0 +1,52 @@
+#+TITLE: Installing ACL2s on NixOS
+
+
+This repository contains instructions for building `acl2s` on NixOS as well as a half-complete NixOS build for the system.
+
+To install, essentially follow the steps [[https://www.ccs.neu.edu/home/pete/courses/Computer-Aided-Reasoning/2021-Fall/hwk1.txt][detailed in this assignment]].
+
+Copied and made more specific:
+1. Clone this repository. Make sure that you have [[https://nixos.wiki/wiki/Flakes][nix flakes enabled]] and [[https://direnv.net/][direnv]] installed.
+
+2. Create a gitlab account using https://gitlab.com/.
+
+3. Clone the following repository as a toplevel subdirectory of this repository:
+   https://gitlab.com/acl2s/external-tool-support/scripts
+   #+begin_src sh
+    git clone https://gitlab.com/acl2s/external-tool-support/scripts ./scripts
+   #+end_src
+
+4. Follow the installation instructions to install ACL2 and
+   ACL2s.
+
+   The ~acl2~ build for NixOS in nixpkgs is currently not up to date, and I can't recall whether it's even compatible with an acl2s installation.
+
+   1. Follow the `acl2` instructions in the README: https://gitlab.com/acl2s/external-tool-support/scripts. The environment variables you need should already be configured in ~.envrc~. Try running clean-gen-acl2-acl2s.sh and rebuild-sbcl-acl2-acl2s.sh
+
+   2. Ensure that the symlinks in `./bin` fire to launch acl2, acl2s respectively. If they don't follow the instructions to rebuild them.
+
+5. Create an acl2s image as per the instructions in the repository.
+   The scripts clean-gen-acl2-acl2s.sh and rebuild-sbcl-acl2-acl2s.sh
+   can be used to do this.
+
+6. Get Emacs working. You'll probably have to install the direnv plugin and configure it for your editor if you'd like to use the flake set up here; otherwise things might not make it into your $PATH. Your options here are to:
+   1. Use the minimal https://gitlab.com/acl2s/external-tool-support/scripts/-/blob/master/.lisp.el to submit expressions to an emacs shell buffer. (To start this, open the default emacs shell, run ~acl2s~ in the shell, then invoke the defined command to send things over).
+
+   2. Use the acl2 emacs mode provided in the acl2 repository, replacing the acl2 exacutable with acl2s.
+
+   3. Configure Proof Peneral to invoke acl2s. I [[https://github.com/jakeisnt/PG][started this]] but didn't get things to a workable state.
+
+7. Run the ACL2s code from this week's lectures on the version of
+   ACL2s you just created and make sure there are no problems.  Make
+   sure to use the key bindings (not cut and paste!)  when in
+   emacs (in .lisp.el).
+
+* Additional notes from throughout the course
+- The chief problem with the nix build is the configured tests; make sure to turn book verification off or you will have a hell of a time. Never verify all of the acl2 books, esp. not at once. You'll know if you need to verify a book.
+
+- Had to remove hunchentoot from acl2, as building it caused some problem with ssl; there are threads about resolving linking with ssl on nix (mostly involving adding to the LD_LIBRARY_PATH variable and installing openssl, I believe) but changing the code was the best I did.
+  Addendum: this *should* be working.
+
+- Also added books/acl2s/interface and books/quicklisp/quicklisp.lsp as per the install instructions; the way to do this will likely be revealed by some of the instructions available in the assignments (which have been preserved)
+
+- many of the scripts/ provided by pete also had to be modified; they rely on /bin/bash, but to be run on nonstandard linux systems they require /usr/bin/env path instead
