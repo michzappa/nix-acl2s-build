@@ -1,26 +1,6 @@
-.direnv/*
-!.direnv/.git-keep
+.direnv
+acl2s.core
 
-/target
-/lib
-/classes
-/checkouts
-pom.xml
-pom.xml.asc
-*.jar
-*.class
-/.lein-*
-/.nrepl-port
-db/
-.lsp/
-
-node_modules/
-.shadow-cljs/
-resources/public/js/
-
-.env
-.lein-env
-profiles.clj
-scripts/
-cs4820/
-acl2/
+# repos which get cloned in
+acl2
+scripts
