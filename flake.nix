@@ -1,30 +1,37 @@
 {
-  description = "preliminary acl2s build";
-  inputs.flake-utils.url = "github:numtide/flake-utils";
+  description = "acl2s build";
 
-  outputs = { self, nixpkgs, flake-utils }:
+  inputs = {
+    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:NixOs/nixpkgs/nixpkgs-unstable";
+  };
+
+  outputs = { self, ... }@inputs:
+    with inputs;
     flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-          acl2s = pkgs.callPackage ./acl2s.nix {};
-
-          buildInputs = with pkgs; [ sbcl openssl libressl z3 gcc pkg-config zlib clang ];
-      in
-        {
-          devShell = pkgs.mkShell {
-            buildInputs = with pkgs; [
+      let
+        pkgs = (import nixpkgs {
+          inherit system;
+          config = { allowUnfree = true; };
+        });
+      in {
+        devShell = pkgs.mkShell {
+          buildInputs = with pkgs;
+            [
               sbcl
-              openssl
-              z3
-              z3.lib
-              gcc
-              pkg-config
-              zlib
-              clang
+              # TODO might need more dependencies eventually
+              # openssl
+              # z3
+              # z3.lib
+              # gcc
+              # pkg-config
+              # zlib
+              # clang
               # for presentation
-              texlive.combined.scheme-full
+              # texlive.combined.scheme-full
             ];
-            LD_LIBRARY_PATH = "${pkgs.openssl}:${pkgs.stdenv.cc.cc.lib}:${pkgs.stdenv.cc.cc.lib}/lib:${pkgs.z3.lib}/lib:${pkgs.z3.lib}:$LD_LIBRARY_PATH";
-          };
-        }
-    );
+          # LD_LIBRARY_PATH =
+          # "${pkgs.openssl}:${pkgs.stdenv.cc.cc.lib}:${pkgs.stdenv.cc.cc.lib}/lib:${pkgs.z3.lib}/lib:${pkgs.z3.lib}:$LD_LIBRARY_PATH";
+        };
+      });
 }
