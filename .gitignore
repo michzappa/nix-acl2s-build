@@ -1,6 +1,8 @@
 .direnv
 acl2s.core
+acl2s
 
 # repos which get cloned in
 acl2
+hand-proof-checker
 scripts
