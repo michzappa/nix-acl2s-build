@@ -7,19 +7,27 @@ This repository contains instructions for building `acl2s` on NixOS.
 
 2. Clone the following repositories
    #+begin_src sh
-     git clone https://gitlab.com/michzappa/acl2-scripts ./scripts
+     git clone https://gitlab.com/acl2s/external-tool-support/scripts ./scripts
      git clone https://github.com/acl2/acl2 ./acl2
+     git clone https://gitlab.com/acl2s/proof-checking/hand-proof-checker ./hand-proof-checker
    #+end_src
 
 3. Run to build acl2 and acl2s
    #+begin_src  sh
-     cd scripts
-     ./clean-gen-acl2-acl2s.sh
-   #+end_src   
+     ./scripts/clean-gen-acl2-acl2s.sh
+   #+end_src
 
-5. Make sure symlinks in `./bin` fire. If not,
+4. Make sure symlinks in `./bin` fire. If not,
    #+begin_src  sh
      cd bin
      ln -s ../acl2/saved_acl2 acl2
-     ln -s ../scripts/acl2s acl2s
+     ln -s ../acl2s acl2s
+     ln -s ../hand-proof-checker/check-file.sh check-proof
+     ln -s ../acl2/books/build/cert.pl cert.pl
    #+end_src
+
+5. Build the hand proof checker CLI (requires docker and dockerd to be running)
+#+begin_src sh
+  cd hand-proof-checker/
+  make proof-checker-cli
+#+end_src
