@@ -29,5 +29,6 @@ This repository contains instructions for building `acl2s` on NixOS.
 5. Build the hand proof checker CLI (requires docker and dockerd to be running)
 #+begin_src sh
   cd hand-proof-checker/
-  make proof-checker-cli
+  make proof-checker-cli # makes the docker image
+  make # builds it locally
 #+end_src
