@@ -16,7 +16,7 @@
         });
       in {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ sbcl openssl ];
+          buildInputs = with pkgs; [ sbcl openssl parallel ];
           LD_LIBRARY_PATH =
             "${pkgs.openssl.out}/lib:$LD_LIBRARY_PATH";
         };
