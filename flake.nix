@@ -12,13 +12,12 @@
       let
         pkgs = (import nixpkgs {
           inherit system;
-          config = { allowUnfree = true; };
         });
-      in {
+      in
+      {
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [ sbcl openssl parallel ];
-          LD_LIBRARY_PATH =
-            "${pkgs.openssl.out}/lib:$LD_LIBRARY_PATH";
+          LD_LIBRARY_PATH = "${pkgs.openssl.out}/lib";
         };
       });
 }
