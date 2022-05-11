@@ -2,7 +2,7 @@
 
 This repository contains instructions for building =acl2s= on NixOS.
 
-1. Clone this repository. Make sure that you have nix flakes enabled and direnv installed. Execute all the following shell blocks from the root of this repository.
+1. Clone this repository. Make sure that you have nix flakes enabled. Execute all the following shell blocks from the root of this repository.
 
 2. Clone the following repositories
    #+begin_src shell :results none
@@ -11,7 +11,7 @@ This repository contains instructions for building =acl2s= on NixOS.
      git clone https://gitlab.com/acl2s/proof-checking/hand-proof-checker ./hand-proof-checker
    #+end_src
 
-3. Run to build acl2 and acl2s
+3. In =nix develop=, run to build acl2 and acl2s
    #+begin_src shell :results none
      ./scripts/clean-gen-acl2-acl2s.sh
    #+end_src
@@ -25,7 +25,7 @@ This repository contains instructions for building =acl2s= on NixOS.
      ln -s ../acl2/books/build/cert.pl cert.pl
    #+end_src
 
-5. Build the hand proof checker CLI (requires docker and dockerd to be running)
+5. In =nix develop=, build the hand proof checker CLI (requires docker and dockerd to be running)
    #+begin_src shell :results none
      cd hand-proof-checker/
      make proof-checker-cli # makes the docker image
